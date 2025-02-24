@@ -1,0 +1,2 @@
+*PartialView'lere URL üzerinden direkt eriþim saðlanýrken ViewComponent'lere saðlanamaz.
+*ViewComponent kullanýmý, PartialView'e göre daha kullanýþlý ve daha güvenli bir yöntemdir.
