@@ -1,0 +1,18 @@
+* Yazma ve okuma iþlemlerini ayýrmak.
+* Bir metot objenin durumunu deðiþtirmeli ya da metot geriye bir sonuç dönmelidir.
+* Performans, güvenlik ve ölçeklenebilirlik saðlar.
+* Yazma: Create-Update-Delete
+* Okuma: List-GetByID
+
+
+- Commands: Select, Update, Delete proplar
+- Queries: Þartlý listeleme iþlemlerinin proplarý
+- Handlers: Crud iþlemleri
+- Results: Listeleme iþlemlerinin proplarý
+
+
+>Commands: Objenin durumunu deðiþtirir.
+>Queires: Sonucu geriye döner (return).
+
+
++Query'ler genellikle "Get" ön eki ile isimlendirilir.

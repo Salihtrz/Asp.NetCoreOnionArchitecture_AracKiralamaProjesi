@@ -1,0 +1,66 @@
+﻿using CarBook.Application.Features.ViewModels;
+using CarBook.Application.Interfaces.CarPricingInterfaces;
+using CarBook.Domain.Entities;
+using CarBook.Persistence.Context;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CarBook.Persistence.Repositories.CarPricingRepositories
+{
+    public class CarPricingRepository : ICarPricingRepository
+    {
+        private readonly CarBookContext _context;
+
+        public CarPricingRepository(CarBookContext context)
+        {
+            _context = context;
+        }
+
+        public List<CarPricing> GetCarPricingWithCars()
+        {
+            var values = _context.CarPricings.Include(x => x.Car).ThenInclude(y => y.Brand)
+                .Include(z => z.Pricing).Where(x => x.PricingID == 3).ToList();
+            return values;
+        }
+
+        public List<CarPricingViewModel> GetCarPricingWithTimePeriod()
+        {
+            List<CarPricingViewModel> values = new List<CarPricingViewModel>();
+            using (var command = _context.Database.GetDbConnection().CreateCommand())
+            {
+                command.CommandText = "Select * From (Select model, CoverImageUrl, Brands.Name, PricingID, Amount From CarPricings Inner Join" +
+                    " Cars On Cars.CarID = CarPricings.CarID " +
+                    "Inner Join Brands On Brands.BrandID = Cars.BrandID) As SourceTable Pivot(Sum(Amount) " +
+                    "For PricingID In([2], [3], [4], [6])) As PivotTable;";
+                command.CommandType = System.Data.CommandType.Text;
+                _context.Database.OpenConnection();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        CarPricingViewModel carPricingViewModel = new CarPricingViewModel()
+                        {
+                            Model = reader["model"].ToString(),
+                            CoverImageUrl = reader["CoverImageUrl"].ToString(),
+                            BrandName = reader["Name"].ToString(),
+                            Amounts = new List<decimal>
+                            {
+                                Convert.ToDecimal(reader[3]),
+                                Convert.ToDecimal(reader[4]),
+                                Convert.ToDecimal(reader[5]),
+                                Convert.ToDecimal(reader[6])
+                            }
+                        };
+                        values.Add(carPricingViewModel);
+                    }
+                }
+                _context.Database.CloseConnection();
+                return values;
+            }
+        }
+    }
+}
