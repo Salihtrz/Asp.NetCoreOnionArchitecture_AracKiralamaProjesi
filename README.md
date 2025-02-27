@@ -1,5 +1,5 @@
 <div>
-  <h1> CarBook - Araç Kiramala Sitesi</h1>
+  <h1> CarBook - Araç Kiralama Sitesi</h1>
   <h3> Projenin Temel Amacı</h3>
   <p> Kullanıcılar, alacakları lokasyona göre uygun araçları listeleyebilir ve istedikleri araca ön kayıt oluşturarak aracı kiralayabilirler.</p>
   <p>ASP.NET Core 8.0 Web API ve MVC kullanılarak geliştirmiş olduğum projede, tüm CRUD işlemleri API üzerinden gerçekleştirilir ve bu işlemler MVC tarafında consume edilir. Dinamik veritabanı yönetimi için EntityFramework Code kullanılmıştır. Onion Architecture mimari yapısı ve CQRS, Mediator, Repository Design patternler kullanılarak projede uygulanarak kodun daha modüler ve sürdürülebilir olmasına öncelik verilmiştir.</p>
